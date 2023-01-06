@@ -5,7 +5,7 @@ class EmployeeInfo():
         self._data = employee_info
 
     def update_employee_info(self, employ_name, **new_employee_info):
-        self._data[employ_name].update(**new_employee_info)
+        self._data[employ_name].update(new_employee_info)
 
     def __getitem__(self, employ_name):
         return self._data[employ_name]
