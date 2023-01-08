@@ -22,14 +22,27 @@ class SubtractStrExceptAlphabetMixin:
 
 class UpperIterableMixin:
     def __iter__(self):
-        return map(str.upper, super().__iter__())
+        yield from map(str.upper, super().__iter__())
 
 
-class Tokenizer(UpperIterableMixin, BaseTokenizer2, BaseTokenizer):
+class TokenizerWithoutMixin(BaseTokenizer):
+    def __iter__(self):
+        yield from [token.upper() for token in self.str_token.split("-")]
+
+
+class Tokenizer(UpperIterableMixin, BaseTokenizer):
     pass
 
 
-class OnlyAlphabetTokenizer(UpperIterableMixin, SubtractStrExceptAlphabetMixin, BaseTokenizer):
+class Tokenizer2(UpperIterableMixin, BaseTokenizer2, BaseTokenizer):
+    pass
+
+
+class OnlyAlphabetTokenizer(SubtractStrExceptAlphabetMixin, BaseTokenizer):
+    pass
+
+
+class OnlyUppercaseAlphabetTokenizer(UpperIterableMixin, SubtractStrExceptAlphabetMixin, BaseTokenizer):
     pass
 
 
@@ -37,10 +50,23 @@ if __name__ == "__main__":
     example_str = "ab/c-d/e-f/gh-ij/klm-nop"
     print(f"original string: {example_str}\n")
 
-    tk = Tokenizer(example_str)
-    print("separate delimiter is '/' and '-'\n", list(tk))
+    tk_without_mixin = TokenizerWithoutMixin(example_str)
+    print("without mixin) separate delimiter is '-'\n", list(tk_without_mixin))
     print()
 
-    tk2 = OnlyAlphabetTokenizer(example_str)
-    print("separate delimiter is '-' and remove other character except alphabet\n", list(tk2))
+    tk1 = Tokenizer(example_str)
+    print("separate delimiter is '-'\n", list(tk1))
+    print()
+
+    tk2 = Tokenizer2(example_str)
+    print("separate delimiter is '/' and '-'\n", list(tk2))
+    print()
+
+    tk3 = OnlyAlphabetTokenizer(example_str)
+    print("separate delimiter is '-' and remove other character except alphabet\n", list(tk3))
+    print()
+
+    tk4 = OnlyUppercaseAlphabetTokenizer(example_str)
+    print("separate delimiter is '-' and remove other character except alphabet and change result to uppercase\n",
+          list(tk4))
 
