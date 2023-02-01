@@ -9,7 +9,7 @@ log.setLevel(logging.INFO)
 log.addHandler(logging.StreamHandler())
 
 
-def calc_time_consumed(operation):
+def log_start_time(operation):
     @wraps(operation)
     def wrapped(*args, **kwargs):
         log.info(f"function starts at {time.strftime('%c', time.localtime())}")
@@ -17,7 +17,7 @@ def calc_time_consumed(operation):
     return wrapped
 
 
-@calc_time_consumed
+@log_start_time
 def origin(n: int):
     for _ in range(n):
         time.sleep(1)
