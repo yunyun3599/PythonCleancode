@@ -22,4 +22,9 @@ print("\n===origin2 function using modifier output===")
 def origin2():
     print("2 - do something original")
 
+
 origin2()
+
+
+if __name__ == "__main__":
+    pass
