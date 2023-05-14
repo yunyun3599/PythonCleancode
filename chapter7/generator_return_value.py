@@ -10,5 +10,5 @@ if __name__ == "__main__":
     print(next(gen))
     try:
         print(next(gen))
-    except  StopIteration as e:
+    except StopIteration as e:
         print(f"returned value: {e.value}")     # returned value: 3
