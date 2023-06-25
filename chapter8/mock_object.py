@@ -1,5 +1,5 @@
 from typing import List, Dict
-from unittest.mock import Mock
+from unittest.mock import Mock, MagicMock
 
 
 class GitBranch:
@@ -25,3 +25,9 @@ def test_find_commit():
 def test_find_any():
     # GitBranch 함수는 magic method를 사용했기 때문에 Mock 사용이 불가능
     author = author_by_id("123", Mock()) is not None
+
+
+def test_find_any_with_magic_mock():
+    branch = MagicMock()
+    branch.__getitem__.return_value = {"author": "test"}
+    assert author_by_id("123", branch) == "test"
